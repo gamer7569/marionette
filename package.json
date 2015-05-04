@@ -1,0 +1,41 @@
+{
+    "name": "marionetteApplication",
+    "version": "1.0.0",
+    "devDependencies": {
+        "browserify": "10.0.0",
+        "browserify-shim": "3.8.6",
+        "watchify": "3.2.1",
+        "minifyify": "6.4.0"
+    },
+    "dependencies": {
+        "jquery": "2.1.4",
+        "underscore": "1.8.3",
+        "backbone": "1.1.2",
+        "backbone.marionette": "2.4.1"
+    },
+    "browser": {
+        "jquery": "./node_modules/jquery/dist/jquery.js",
+        "underscore": "./node_modules/underscore/underscore.js",
+        "backbone": "./node_modules/backbone/backbone.js",
+        "marionette": "./node_modules/backbone.marionette/lib/backbone.marionette.js"
+    },
+    "browserify-shim": {
+        "jquery": "$",
+        "underscore": "_",
+        "backbone": {
+            "exports": "Backbone",
+            "depends": ["jquery:$", "underscore:_"]
+        },
+        "marionette": {
+            "exports": "Marionette",
+            "depends": ["jquery:$", "underscore:_", "backbone:Backbone"]
+        }
+    },
+    "browserify": {
+        "transform": ["browserify-shim"]
+    },
+    "scripts": {
+        "build": "browserify -d -p [minifyify --map map/main.map.json --output assets/js/map/main.map.json] assets/js/src/main.js -o assets/js/main.min.js",
+        "watch": "watchify assets/js/src/main.js -o assets/js/main.min.js -dv"
+    }
+}
